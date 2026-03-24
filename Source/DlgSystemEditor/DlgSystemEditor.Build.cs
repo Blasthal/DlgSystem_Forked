@@ -70,6 +70,13 @@ public class DlgSystemEditor : ModuleRules
 
 				// e.g. FPlatformApplicationMisc::ClipboardCopy
 				"ApplicationCore",
+				// ==========================================================
+				// [Bhgp Custom] ここから
+				// ------------------------------------------
+				"BHGPDialogueSystem",
+				// ------------------------------------------
+				// [Bhgp Custom] ここまで
+				// ==========================================================
 			});
 
 #if UE_4_24_OR_LATER

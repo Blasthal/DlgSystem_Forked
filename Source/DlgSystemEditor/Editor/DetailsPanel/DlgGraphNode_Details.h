@@ -67,6 +67,14 @@ private:
 	// The IsVirtualParent property changed
 	void OnIsVirtualParentChanged();
 
+	// ==========================================================
+	// [Bhgp Custom] ここから
+	// ------------------------------------------
+	// 参加者タグが変更された時に UI をリフレッシュする関数
+	void OnParticipantTagChanged();
+	// ------------------------------------------
+	// [Bhgp Custom] ここまで
+	// ==========================================================
 private:
 	/** Hold the reference to the Graph Node this represents */
 	UDialogueGraphNode* GraphNode = nullptr;

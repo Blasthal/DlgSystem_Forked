@@ -17,6 +17,13 @@
 #include "DlgSystemEditor/Editor/DetailsPanel/Widgets/DlgIntTextBox_CustomRowHelper.h"
 
 #include "Widgets/Input/SButton.h"
+// ==========================================================
+// [Bhgp Custom] ここから：独自のReadOnly制御
+// ------------------------------------------
+#include "DlgNodes/BhgpDlgNode_Speech.h"
+// ------------------------------------------
+// [Bhgp Custom] ここまで
+// ==========================================================
 
 #define LOCTEXT_NAMESPACE "DialoguGraphNode_Details"
 
@@ -83,9 +90,34 @@ void FDlgGraphNode_Details::CustomizeDetails(IDetailLayoutBuilder& DetailBuilder
 				.HasContextCheckbox(true)
 				.IsContextCheckBoxChecked(true)
 				.CurrentContextAvailableSuggestions(this, &Self::GetCurrentDialogueParticipantNames)
+				// ==========================================================
+				// [Bhgp Custom] ここから：独自のReadOnly制御
+				// ------------------------------------------
+				// UBhgpDlgNode_Speech の時だけ、このUI全体を無効化（グレーアウト）する！
+				.IsEnabled(!DialogueNode.IsA(UBhgpDlgNode_Speech::StaticClass()))
+				// ------------------------------------------
+				// [Bhgp Custom] ここまで
+				// ==========================================================
 			)
 			.Update();
 		}
+		// ==========================================================
+		// [Bhgp Custom] ここから：独自のReadOnly制御
+		// ------------------------------------------
+		{
+			// ParticipantTag を引っ張り出して追加
+			TSharedPtr<IPropertyHandle> ParticipantTag_Handle = PropertyDialogueNode->GetChildHandle(TEXT("ParticipantTag"));
+			if (ParticipantTag_Handle.IsValid() && ParticipantTag_Handle->IsValidHandle())
+			{
+				// 値が変わったら、リフレッシュ関数を呼ぶように紐付ける！
+				ParticipantTag_Handle->SetOnPropertyValueChanged(FSimpleDelegate::CreateSP(this, &Self::OnParticipantTagChanged));
+
+				BaseDataCategory.AddProperty(ParticipantTag_Handle);
+			}
+		}
+		// ------------------------------------------
+		// [Bhgp Custom] ここまで
+		// ==========================================================
 
 		// End Nodes and Proxy Nodes can't have children
 		if (!bIsEndNode && !bIsProxyNode)
@@ -281,6 +313,36 @@ void FDlgGraphNode_Details::OnIsVirtualParentChanged()
 {
 	DetailLayoutBuilder->ForceRefreshDetails();
 }
+
+
+// ==========================================================
+// [Bhgp Custom] ここから
+// ------------------------------------------
+void FDlgGraphNode_Details::OnParticipantTagChanged()
+{
+	// 全体を破壊して再構築する処理（これが GameplayTag を選択するウィンドウを閉じる原因なのでやめた！）
+	// DetailLayoutBuilder->ForceRefreshDetails();
+
+	// 代わりに、OwnerName のプロパティハンドルを取得する
+	TSharedPtr<IPropertyHandle> PropertyDialogueNode = DetailLayoutBuilder->GetProperty(UDialogueGraphNode::GetMemberNameDialogueNode(), UDialogueGraphNode::StaticClass());
+	TSharedPtr<IPropertyHandle> OwnerNameHandle = PropertyDialogueNode->GetChildHandle(UDlgNode::GetMemberNameOwnerName());
+
+	if (OwnerNameHandle.IsValid())
+	{
+		// UE 標準のプロパティシステムに「値が変わったよ」と通知して UI 更新を促す魔法！
+		OwnerNameHandle->NotifyPostChange(EPropertyChangeType::ValueSet);
+	}
+
+	// プラグイン独自の UI ヘルパー（CustomRow）が存在していれば、それも更新してあげる
+	if (ParticipantNamePropertyRow.IsValid())
+	{
+		ParticipantNamePropertyRow->Update();
+	}
+}
+// ------------------------------------------
+// [Bhgp Custom] ここまで
+// ==========================================================
+
 
 //////////////////////////////////////////////////////////////////////////
 
