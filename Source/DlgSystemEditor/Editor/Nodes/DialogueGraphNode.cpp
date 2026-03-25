@@ -18,6 +18,13 @@
 #include "DlgSystemEditor/DlgCommands.h"
 #include "DlgSystem/DlgSystemSettings.h"
 #include "DlgSystem/Nodes/DlgNode_Custom.h"
+// ==========================================================
+// [Bhgp Custom] ここから
+// ==========================================================
+#include "DlgNodes/BhgpDlgNode_Speech.h"
+// ==========================================================
+// [Bhgp Custom] ここまで
+// ==========================================================
 
 #define LOCTEXT_NAMESPACE "DialogueGraphNode"
 
@@ -333,6 +340,17 @@ FLinearColor UDialogueGraphNode::GetNodeBackgroundColor() const
 		{
 			return Settings->VirtualParentNodeColor;
 		}
+
+		// ==========================================================
+		// [Bhgp Custom] ここから：独自ノード専用の特別カラー！
+		// ==========================================================
+		if (DialogueNode->IsA(UBhgpDlgNode_Speech::StaticClass()))
+		{
+			return FLinearColor(0.0f, 0.5f, 1.0f, 1.0f);
+		}
+		// ==========================================================
+		// [Bhgp Custom] ここまで
+		// ==========================================================
 
 		return Settings->SpeechNodeColor;
 	}

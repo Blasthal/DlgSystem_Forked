@@ -18,7 +18,7 @@
 
 #include "Widgets/Input/SButton.h"
 // ==========================================================
-// [Bhgp Custom] ここから：独自のReadOnly制御
+// [Bhgp Custom] ここから
 // ------------------------------------------
 #include "DlgNodes/BhgpDlgNode_Speech.h"
 // ------------------------------------------
