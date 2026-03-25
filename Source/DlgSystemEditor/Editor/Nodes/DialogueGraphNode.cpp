@@ -20,9 +20,9 @@
 #include "DlgSystem/Nodes/DlgNode_Custom.h"
 // ==========================================================
 // [Bhgp Custom] ここから
-// ==========================================================
+// ------------------------------------------
 #include "DlgNodes/BhgpDlgNode_Speech.h"
-// ==========================================================
+// ------------------------------------------
 // [Bhgp Custom] ここまで
 // ==========================================================
 
@@ -343,12 +343,12 @@ FLinearColor UDialogueGraphNode::GetNodeBackgroundColor() const
 
 		// ==========================================================
 		// [Bhgp Custom] ここから：独自ノード専用の特別カラー！
-		// ==========================================================
+		// ------------------------------------------
 		if (DialogueNode->IsA(UBhgpDlgNode_Speech::StaticClass()))
 		{
 			return FLinearColor(0.0f, 0.5f, 1.0f, 1.0f);
 		}
-		// ==========================================================
+		// ------------------------------------------
 		// [Bhgp Custom] ここまで
 		// ==========================================================
 
@@ -981,6 +981,26 @@ bool UDialogueGraphNode::DoesEdgeMatchEdgeIndex(const FDlgEdge& Edge, int32 Edge
 
 	return true;
 }
+
+
+// ==========================================================
+// [Bhgp Custom] ここから
+// ------------------------------------------
+FSlateIcon UDialogueGraphNode::GetNodeIcon() const
+{
+	if (DialogueNode->IsA(UBhgpDlgNode_Speech::StaticClass()))
+	{
+		static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Icons.Comment");
+		return Icon;
+	}
+
+	return Super::GetNodeIcon();
+}
+// ------------------------------------------
+// [Bhgp Custom] ここまで
+// ==========================================================
+
+
 // End own functions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

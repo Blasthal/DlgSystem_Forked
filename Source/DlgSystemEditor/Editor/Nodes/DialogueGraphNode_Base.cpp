@@ -102,6 +102,23 @@ void UDialogueGraphNode_Base::ReconstructNode()
 	OldPins.Empty();
 }
 
+// ==========================================================
+// [Bhgp Custom] ここから
+// ------------------------------------------
+FSlateIcon UDialogueGraphNode_Base::GetIconAndTint(FLinearColor& OutColor) const
+{
+	const FSlateIcon Icon = GetNodeIcon();
+
+	// NOTE: アイコンの色をこの関数名で取得するような色へ変える必要無くない？ 白で統一しておく。
+	// OutColor = GetNodeBackgroundColor();
+	OutColor = FLinearColor::White;
+
+	return Icon;
+}
+// ------------------------------------------
+// [Bhgp Custom] ここまで
+// ==========================================================
+
 // End UEdGraphNode interface
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

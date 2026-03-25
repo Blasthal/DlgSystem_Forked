@@ -88,11 +88,18 @@ public:
 
 	/** @return Icon to use in menu or on node */
 	virtual FSlateIcon GetIconAndTint(FLinearColor& OutColor) const override
-	{
-		static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Graph.StateNode.Icon");
-		OutColor = GetNodeBackgroundColor();
-		return Icon;
-	}
+	// ==========================================================
+	// [Bhgp Custom] ここから: ヘッダで定義されていた実装を cpp で行うように。
+	// ------------------------------------------
+	;
+	// {
+	// 	static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Graph.StateNode.Icon");
+	// 	OutColor = GetNodeBackgroundColor();
+	// 	return Icon;
+	// }
+	// ------------------------------------------
+	// [Bhgp Custom] ここまで
+	// ==========================================================
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// Begin own functions
@@ -109,6 +116,18 @@ public:
 
 	/** Checks whether an output connection can be added from this node */
 	virtual bool CanHaveOutputConnections() const { return true; }
+
+	// ==========================================================
+	// [Bhgp Custom] ここから
+	// ------------------------------------------
+	virtual FSlateIcon GetNodeIcon() const
+	{
+		static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Graph.StateNode.Icon");
+		return Icon;
+	}
+	// ------------------------------------------
+	// [Bhgp Custom] ここまで
+	// ==========================================================
 
 	/** Gets the background color of this node. */
 	virtual FLinearColor GetNodeBackgroundColor() const { return FLinearColor::Black; }

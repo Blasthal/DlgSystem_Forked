@@ -440,4 +440,14 @@ protected:
 
 	/** Forcefully hide this node from the graph. */
 	bool bForceHideNode = false;
+
+
+	// ==========================================================
+	// [Bhgp Custom] ここから
+	// ------------------------------------------
+public:
+	virtual FSlateIcon GetNodeIcon() const override;
+	// ------------------------------------------
+	// [Bhgp Custom] ここまで
+	// ==========================================================
 };

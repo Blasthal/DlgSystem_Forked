@@ -433,11 +433,31 @@ TSharedRef<SWidget> SDlgGraphNode::GetTitleWidget()
 					// Icon
 					+SHorizontalBox::Slot()
 					.AutoWidth()
+					// ==========================================================
+					// [Bhgp Custom] ここから: アイコンのサイズが合うように調整
+					// ------------------------------------------
+					.VAlign(VAlign_Center) // 追加：縦位置を真ん中に揃える
+					.Padding(4.0f, 4.0f, 4.0f, 4.0f) // 追加：周囲に少し隙間(余白)を作る
+					[
+						// 追加：SBoxで囲んで、サイズを16x16に強制する！
+						SNew(SBox)
+						.WidthOverride(16.0f)
+						.HeightOverride(16.0f)
+					// ------------------------------------------
+					// [Bhgp Custom] ここまで
+					// ==========================================================
 					[
 						SNew(SImage)
 						.Image(IconBrush)
 						.ColorAndOpacity(this, &Super::GetNodeTitleIconColor)
 					]
+					// ==========================================================
+					// [Bhgp Custom] ここから
+					// ------------------------------------------
+					]
+					// ------------------------------------------
+					// [Bhgp Custom] ここまで
+					// ==========================================================
 
 					// Title content
 					+SHorizontalBox::Slot()
