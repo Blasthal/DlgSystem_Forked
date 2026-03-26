@@ -105,8 +105,8 @@ void FDlgGraphNode_Details::CustomizeDetails(IDetailLayoutBuilder& DetailBuilder
 		// [Bhgp Custom] ここから：独自のReadOnly制御
 		// ------------------------------------------
 		{
-			// ParticipantTag を引っ張り出して追加
-			TSharedPtr<IPropertyHandle> ParticipantTag_Handle = PropertyDialogueNode->GetChildHandle(TEXT("ParticipantTag"));
+			// ParticipantRoleTag を引っ張り出して追加
+			TSharedPtr<IPropertyHandle> ParticipantTag_Handle = PropertyDialogueNode->GetChildHandle(TEXT("ParticipantRoleTag"));
 			if (ParticipantTag_Handle.IsValid() && ParticipantTag_Handle->IsValidHandle())
 			{
 				// 値が変わったら、リフレッシュ関数を呼ぶように紐付ける！
