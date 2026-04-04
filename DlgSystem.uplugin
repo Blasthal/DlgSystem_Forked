@@ -36,5 +36,13 @@
 			"LoadingPhase": "PreDefault",
 			"WhitelistPlatforms": ["Win64", "Linux", "Mac"]
 		}
-	]
+	]/*,
+	※BhgpDialogueSystemPlugin と循環参照してしまい、ビルドエラーになるためコメントアウト。
+	※BhgpDialogueSystemEditor を作成してそちらで処理を施すことで対応は可能。一案。
+	"Plugins": [
+		{
+			"Name": "BHGPDialogueSystem",
+			"Enabled": true
+		}
+	]*/
 }
