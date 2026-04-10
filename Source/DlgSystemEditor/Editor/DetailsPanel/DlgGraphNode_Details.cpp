@@ -101,23 +101,6 @@ void FDlgGraphNode_Details::CustomizeDetails(IDetailLayoutBuilder& DetailBuilder
 			)
 			.Update();
 		}
-		// ==========================================================
-		// [Bhgp Custom] ここから：独自のReadOnly制御
-		// ------------------------------------------
-		{
-			// ParticipantRoleTag を引っ張り出して追加
-			TSharedPtr<IPropertyHandle> ParticipantTag_Handle = PropertyDialogueNode->GetChildHandle(TEXT("ParticipantRoleTag"));
-			if (ParticipantTag_Handle.IsValid() && ParticipantTag_Handle->IsValidHandle())
-			{
-				// 値が変わったら、リフレッシュ関数を呼ぶように紐付ける！
-				ParticipantTag_Handle->SetOnPropertyValueChanged(FSimpleDelegate::CreateSP(this, &Self::OnParticipantTagChanged));
-
-				BaseDataCategory.AddProperty(ParticipantTag_Handle);
-			}
-		}
-		// ------------------------------------------
-		// [Bhgp Custom] ここまで
-		// ==========================================================
 
 		// End Nodes and Proxy Nodes can't have children
 		if (!bIsEndNode && !bIsProxyNode)
@@ -313,36 +296,6 @@ void FDlgGraphNode_Details::OnIsVirtualParentChanged()
 {
 	DetailLayoutBuilder->ForceRefreshDetails();
 }
-
-
-// ==========================================================
-// [Bhgp Custom] ここから
-// ------------------------------------------
-void FDlgGraphNode_Details::OnParticipantTagChanged()
-{
-	// 全体を破壊して再構築する処理（これが GameplayTag を選択するウィンドウを閉じる原因なのでやめた！）
-	// DetailLayoutBuilder->ForceRefreshDetails();
-
-	// 代わりに、OwnerName のプロパティハンドルを取得する
-	TSharedPtr<IPropertyHandle> PropertyDialogueNode = DetailLayoutBuilder->GetProperty(UDialogueGraphNode::GetMemberNameDialogueNode(), UDialogueGraphNode::StaticClass());
-	TSharedPtr<IPropertyHandle> OwnerNameHandle = PropertyDialogueNode->GetChildHandle(UDlgNode::GetMemberNameOwnerName());
-
-	if (OwnerNameHandle.IsValid())
-	{
-		// UE 標準のプロパティシステムに「値が変わったよ」と通知して UI 更新を促す魔法！
-		OwnerNameHandle->NotifyPostChange(EPropertyChangeType::ValueSet);
-	}
-
-	// プラグイン独自の UI ヘルパー（CustomRow）が存在していれば、それも更新してあげる
-	if (ParticipantNamePropertyRow.IsValid())
-	{
-		ParticipantNamePropertyRow->Update();
-	}
-}
-// ------------------------------------------
-// [Bhgp Custom] ここまで
-// ==========================================================
-
 
 //////////////////////////////////////////////////////////////////////////
 
