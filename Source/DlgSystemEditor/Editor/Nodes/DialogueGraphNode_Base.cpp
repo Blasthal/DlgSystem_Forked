@@ -116,7 +116,7 @@ FSlateIcon UDialogueGraphNode_Base::GetIconAndTint(FLinearColor& OutColor) const
 	return Icon;
 }
 // ------------------------------------------
-// [Bhgp Custom] ここまで
+// [/Bhgp Custom] ここまで
 // ==========================================================
 
 // End UEdGraphNode interface

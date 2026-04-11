@@ -337,4 +337,26 @@ protected:
 	// Edges that point to Children of this Node
 	UPROPERTY(VisibleAnywhere, EditFixedSize, AdvancedDisplay, Category = "Dialogue|Node")
 	TArray<FDlgEdge> Children;
+
+
+
+
+
+	// ==========================================================
+	// [Bhgp Custom] ここから
+	// ------------------------------------------
+#if WITH_EDITOR
+public:
+	/** [Bhgp Custom] エディターグラフ上で使用するカスタムアイコンの名称を返します */
+	virtual FName GetCustomEditorIconName() const { return NAME_None; }
+
+	/** [Bhgp Custom] エディターグラフ上で使用するカスタムカラーを使用するかどうか */
+	virtual bool HasCustomEditorColor() const { return false; }
+
+	/** [Bhgp Custom] エディターグラフ上で使用するカスタムカラーを返します */
+	virtual FLinearColor GetCustomEditorColor() const { return FLinearColor::White; }
+#endif
+	// ------------------------------------------
+	// [/Bhgp Custom] ここまで
+	// ==========================================================
 };

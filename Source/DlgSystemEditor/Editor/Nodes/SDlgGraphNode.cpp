@@ -444,7 +444,7 @@ TSharedRef<SWidget> SDlgGraphNode::GetTitleWidget()
 						.WidthOverride(16.0f)
 						.HeightOverride(16.0f)
 					// ------------------------------------------
-					// [Bhgp Custom] ここまで
+					// [/Bhgp Custom] ここまで
 					// ==========================================================
 					[
 						SNew(SImage)
@@ -452,11 +452,11 @@ TSharedRef<SWidget> SDlgGraphNode::GetTitleWidget()
 						.ColorAndOpacity(this, &Super::GetNodeTitleIconColor)
 					]
 					// ==========================================================
-					// [Bhgp Custom] ここから
+					// [/Bhgp Custom] ここから
 					// ------------------------------------------
 					]
 					// ------------------------------------------
-					// [Bhgp Custom] ここまで
+					// [/Bhgp Custom] ここまで
 					// ==========================================================
 
 					// Title content

@@ -448,6 +448,6 @@ protected:
 public:
 	virtual FSlateIcon GetNodeIcon() const override;
 	// ------------------------------------------
-	// [Bhgp Custom] ここまで
+	// [/Bhgp Custom] ここまで
 	// ==========================================================
 };

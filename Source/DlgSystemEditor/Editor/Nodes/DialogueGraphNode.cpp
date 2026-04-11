@@ -18,13 +18,6 @@
 #include "DlgSystemEditor/DlgCommands.h"
 #include "DlgSystem/DlgSystemSettings.h"
 #include "DlgSystem/Nodes/DlgNode_Custom.h"
-// ==========================================================
-// [Bhgp Custom] ここから
-// ------------------------------------------
-#include "DlgNodes/BhgpDlgNode_Speech.h"
-// ------------------------------------------
-// [Bhgp Custom] ここまで
-// ==========================================================
 
 #define LOCTEXT_NAMESPACE "DialogueGraphNode"
 
@@ -342,14 +335,16 @@ FLinearColor UDialogueGraphNode::GetNodeBackgroundColor() const
 		}
 
 		// ==========================================================
-		// [Bhgp Custom] ここから：独自ノード専用の特別カラー！
+		// [Bhgp Custom] ここから： 依存を排除した汎用カラー取得
 		// ------------------------------------------
-		if (DialogueNode->IsA(UBhgpDlgNode_Speech::StaticClass()))
+#if WITH_EDITOR
+		if (DialogueNode && DialogueNode->HasCustomEditorColor())
 		{
-			return FLinearColor(0.0f, 0.5f, 1.0f, 1.0f);
+			return DialogueNode->GetCustomEditorColor();
 		}
+#endif
 		// ------------------------------------------
-		// [Bhgp Custom] ここまで
+		// [/Bhgp Custom] ここまで
 		// ==========================================================
 
 		return Settings->SpeechNodeColor;
@@ -984,20 +979,25 @@ bool UDialogueGraphNode::DoesEdgeMatchEdgeIndex(const FDlgEdge& Edge, int32 Edge
 
 
 // ==========================================================
-// [Bhgp Custom] ここから
+// [Bhgp Custom] ここから： 依存を排除した汎用アイコン取得
 // ------------------------------------------
 FSlateIcon UDialogueGraphNode::GetNodeIcon() const
 {
-	if (DialogueNode->IsA(UBhgpDlgNode_Speech::StaticClass()))
+#if WITH_EDITOR
+	if (DialogueNode)
 	{
-		static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Icons.Comment");
-		return Icon;
+		const FName CustomIconName = DialogueNode->GetCustomEditorIconName();
+		if (CustomIconName != NAME_None)
+		{
+			return FSlateIcon(NY_GET_APP_STYLE_NAME(), CustomIconName);
+		}
 	}
+#endif
 
 	return Super::GetNodeIcon();
 }
 // ------------------------------------------
-// [Bhgp Custom] ここまで
+// [/Bhgp Custom] ここまで
 // ==========================================================
 
 

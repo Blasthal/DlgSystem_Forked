@@ -98,7 +98,7 @@ public:
 	// 	return Icon;
 	// }
 	// ------------------------------------------
-	// [Bhgp Custom] ここまで
+	// [/Bhgp Custom] ここまで
 	// ==========================================================
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,18 +116,6 @@ public:
 
 	/** Checks whether an output connection can be added from this node */
 	virtual bool CanHaveOutputConnections() const { return true; }
-
-	// ==========================================================
-	// [Bhgp Custom] ここから
-	// ------------------------------------------
-	virtual FSlateIcon GetNodeIcon() const
-	{
-		static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Graph.StateNode.Icon");
-		return Icon;
-	}
-	// ------------------------------------------
-	// [Bhgp Custom] ここまで
-	// ==========================================================
 
 	/** Gets the background color of this node. */
 	virtual FLinearColor GetNodeBackgroundColor() const { return FLinearColor::Black; }
@@ -217,4 +205,21 @@ protected:
 	// Constants for the location of the input/output pins in the Pins array
 	static constexpr int32 INDEX_PIN_Input = 0;
 	static constexpr int32 INDEX_PIN_Output = 1;
+
+
+
+
+
+	// ==========================================================
+	// [Bhgp Custom] ここから
+	// ------------------------------------------
+public:
+	virtual FSlateIcon GetNodeIcon() const
+	{
+		static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Graph.StateNode.Icon");
+		return Icon;
+	}
+	// ------------------------------------------
+	// [/Bhgp Custom] ここまで
+	// ==========================================================
 };

@@ -86,7 +86,7 @@ void FDlgGraphNode_Details::CustomizeDetails(IDetailLayoutBuilder& DetailBuilder
 				// ==========================================================
 				// [Bhgp Custom] ここから
 				// ------------------------------------------
-				// サブクラス側の値によって、有効、無効を設定する
+				// [Bhgp Custom] サブクラス側の値によって、有効、無効を設定する
 				.IsEnabled(ShouldEnableParticipantNamePropertyRow(DialogueNode))
 				// ------------------------------------------
 				// [/Bhgp Custom] ここまで
