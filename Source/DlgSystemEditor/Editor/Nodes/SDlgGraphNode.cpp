@@ -452,7 +452,7 @@ TSharedRef<SWidget> SDlgGraphNode::GetTitleWidget()
 						.ColorAndOpacity(this, &Super::GetNodeTitleIconColor)
 					]
 					// ==========================================================
-					// [/Bhgp Custom] ここから
+					// [Bhgp Custom] ここから
 					// ------------------------------------------
 					]
 					// ------------------------------------------

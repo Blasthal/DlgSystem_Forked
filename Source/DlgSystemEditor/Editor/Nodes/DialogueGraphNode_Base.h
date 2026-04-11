@@ -214,6 +214,7 @@ protected:
 	// [Bhgp Custom] ここから
 	// ------------------------------------------
 public:
+	// [Bhgp Custom] ノードに表示するアイコンを取得する。サブクラスで任意に変更できるよう、仮想関数として用意。
 	virtual FSlateIcon GetNodeIcon() const
 	{
 		static const FSlateIcon Icon = FSlateIcon(NY_GET_APP_STYLE_NAME(), "Graph.StateNode.Icon");

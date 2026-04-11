@@ -445,8 +445,10 @@ protected:
 	// ==========================================================
 	// [Bhgp Custom] ここから
 	// ------------------------------------------
+	//~ Begin of UDialogueGraphNode_Base
 public:
 	virtual FSlateIcon GetNodeIcon() const override;
+	//~ End of UDialogueGraphNode_Base
 	// ------------------------------------------
 	// [/Bhgp Custom] ここまで
 	// ==========================================================
