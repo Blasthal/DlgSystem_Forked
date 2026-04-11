@@ -17,13 +17,6 @@
 #include "DlgSystemEditor/Editor/DetailsPanel/Widgets/DlgIntTextBox_CustomRowHelper.h"
 
 #include "Widgets/Input/SButton.h"
-// ==========================================================
-// [Bhgp Custom] ここから
-// ------------------------------------------
-#include "DlgNodes/BhgpDlgNode_Speech.h"
-// ------------------------------------------
-// [Bhgp Custom] ここまで
-// ==========================================================
 
 #define LOCTEXT_NAMESPACE "DialoguGraphNode_Details"
 
@@ -91,12 +84,12 @@ void FDlgGraphNode_Details::CustomizeDetails(IDetailLayoutBuilder& DetailBuilder
 				.IsContextCheckBoxChecked(true)
 				.CurrentContextAvailableSuggestions(this, &Self::GetCurrentDialogueParticipantNames)
 				// ==========================================================
-				// [Bhgp Custom] ここから：独自のReadOnly制御
+				// [Bhgp Custom] ここから
 				// ------------------------------------------
-				// UBhgpDlgNode_Speech の時だけ、このUI全体を無効化（グレーアウト）する！
-				.IsEnabled(!DialogueNode.IsA(UBhgpDlgNode_Speech::StaticClass()))
+				// サブクラス側の値によって、有効、無効を設定する
+				.IsEnabled(ShouldEnableParticipantNamePropertyRow(DialogueNode))
 				// ------------------------------------------
-				// [Bhgp Custom] ここまで
+				// [/Bhgp Custom] ここまで
 				// ==========================================================
 			)
 			.Update();

@@ -93,4 +93,22 @@ private:
 
 	/** Hold a reference to dialogue we are displaying. */
 	UDlgDialogue* Dialogue = nullptr;
+
+
+
+
+
+	// ==========================================================
+	// [Bhgp Custom] ここから
+	// ------------------------------------------
+public:
+	/**
+	 * [Editor Only]
+	 * エディターの詳細パネルで ParticipantName の UI を無効化（ReadOnly）するかどうかを返します。
+	 * 派生クラスで特殊な制御（独自のTagを使う場合など）をしたい時に Override します。
+	 */
+	virtual bool ShouldEnableParticipantNamePropertyRow(const UDlgNode& Node) const { return true; }
+	// ------------------------------------------
+	// [/Bhgp Custom] ここまで
+	// ==========================================================
 };
