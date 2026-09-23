@@ -368,18 +368,34 @@ bool FDlgEditorUtilities::AreDialogueNodesInSyncWithGraphNodes(const UDlgDialogu
 	}
 
 	// The counts can match while a Node entry itself is null/invalid; treat that the same as being out of sync
-	// so that PostLoad does not continue into code that dereferences the Node.
-	for (const UDlgNode* Node : Dialogue->GetNodes())
+	// so that PostLoad does not continue into code that dereferences the Node. Logged here (instead of relying
+	// solely on the PostLoad-side guard) because this check runs first in a Normal Editor and would otherwise
+	// silently swallow the invalid entry before PostLoad's own Error log is ever reached.
+	const TArray<UDlgNode*>& Nodes = Dialogue->GetNodes();
+	for (int32 NodeIndex = 0; NodeIndex < Nodes.Num(); ++NodeIndex)
 	{
-		if (!IsValid(Node))
+		if (!IsValid(Nodes[NodeIndex]))
 		{
+			UE_LOG(
+				LogDlgSystemEditor,
+				Error,
+				TEXT("Dialogue = `%s` contains an invalid/null Node in `Nodes` at index = %d."),
+				*Dialogue->GetPathName(), NodeIndex
+			)
 			return false;
 		}
 	}
-	for (const UDlgNode* Node : Dialogue->GetStartNodes())
+	const TArray<UDlgNode*>& StartNodes = Dialogue->GetStartNodes();
+	for (int32 NodeIndex = 0; NodeIndex < StartNodes.Num(); ++NodeIndex)
 	{
-		if (!IsValid(Node))
+		if (!IsValid(StartNodes[NodeIndex]))
 		{
+			UE_LOG(
+				LogDlgSystemEditor,
+				Error,
+				TEXT("Dialogue = `%s` contains an invalid/null Node in `StartNodes` at index = %d."),
+				*Dialogue->GetPathName(), NodeIndex
+			)
 			return false;
 		}
 	}
