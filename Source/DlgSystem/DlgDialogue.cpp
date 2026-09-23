@@ -142,6 +142,20 @@ void UDlgDialogue::PostLoad()
 	for (int32 NodeIndex = 0; NodeIndex < NodesNum; NodeIndex++)
 	{
 		UDlgNode* Node = Nodes[NodeIndex];
+
+		// Last line of defense: if an invalid/null Node ever reaches this point (the editor-side sync check above
+		// is expected to catch this first, but is not compiled/run for non-editor builds or without an editor module),
+		// dereferencing it below (GetGraphNode/GetNodeChildren) would crash. Report it as an Error and stop
+		// processing the rest of this Dialogue instead.
+		if (!IsValid(Node))
+		{
+			FDlgLogger::Get().Errorf(
+				TEXT("Dialogue = `%s` contains an invalid/null Node at index = %d (DialogueVersion = %d). Aborting the rest of PostLoad for this Dialogue."),
+				*GetPathName(), NodeIndex, DialogueVersion
+			);
+			return;
+		}
+
 #if WITH_EDITOR
 		if (bHasDialogueEditorModule)
 		{

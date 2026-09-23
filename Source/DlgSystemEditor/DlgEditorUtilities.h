@@ -100,7 +100,10 @@ public:
 	 */
 	static void TryToCreateDefaultGraph(UDlgDialogue* Dialogue, bool bPrompt = true);
 
-	/** Tells us if the number of dialogue nodes matches with the number of graph nodes (corresponding to dialogues). */
+	/**
+	 * Tells us if the number of dialogue nodes matches with the number of graph nodes (corresponding to dialogues),
+	 * and that none of the Dialogue/Start Nodes are null/invalid.
+	 */
 	static bool AreDialogueNodesInSyncWithGraphNodes(const UDlgDialogue* Dialogue);
 
 	// Tries to get the closest UDlgNode for a  UEdGraphNode

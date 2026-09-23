@@ -362,12 +362,29 @@ bool FDlgEditorUtilities::AreDialogueNodesInSyncWithGraphNodes(const UDlgDialogu
 {
 	const int32 NumGraphNodes = CastChecked<UDialogueGraph>(Dialogue->GetGraph())->GetAllDialogueGraphNodes().Num();
 	const int32 NumDialogueNodes = Dialogue->GetNodes().Num() + Dialogue->GetStartNodes().Num(); // (normal nodes + the start nodes)
-	if (NumGraphNodes == NumDialogueNodes)
+	if (NumGraphNodes != NumDialogueNodes)
 	{
-		return true;
+		return false;
 	}
 
-	return false;
+	// The counts can match while a Node entry itself is null/invalid; treat that the same as being out of sync
+	// so that PostLoad does not continue into code that dereferences the Node.
+	for (const UDlgNode* Node : Dialogue->GetNodes())
+	{
+		if (!IsValid(Node))
+		{
+			return false;
+		}
+	}
+	for (const UDlgNode* Node : Dialogue->GetStartNodes())
+	{
+		if (!IsValid(Node))
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 UDlgNode* FDlgEditorUtilities::GetClosestNodeFromGraphNode(UEdGraphNode* GraphNode)
