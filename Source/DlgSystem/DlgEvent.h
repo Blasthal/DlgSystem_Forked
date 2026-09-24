@@ -116,6 +116,9 @@ public:
 
 	FString GetEditorDisplayString(UDlgDialogue* OwnerDialogue) const;
 
+	// Is this a valid Custom Event that declares it does not use a participant (UDlgEventCustom::RequiresParticipant)?
+	bool IsParticipantIndependentCustomEvent() const;
+
 protected:
 	bool ValidateIsParticipantValid(const UDlgContext& Context, const FString& ContextString, const UObject* Participant) const;
 

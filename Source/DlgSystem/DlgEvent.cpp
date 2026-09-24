@@ -149,6 +149,12 @@ bool FDlgEvent::ValidateIsParticipantValid(const UDlgContext& Context, const FSt
 		return true;
 	}
 
+	// The event declared it does not use the participant, so its absence is not worth a warning
+	if (IsParticipantIndependentCustomEvent())
+	{
+		return false;
+	}
+
 	if (MustHaveParticipant())
 	{
 		FDlgLogger::Get().Errorf(
@@ -165,6 +171,11 @@ bool FDlgEvent::ValidateIsParticipantValid(const UDlgContext& Context, const FSt
 	}
 
 	return false;
+}
+
+bool FDlgEvent::IsParticipantIndependentCustomEvent() const
+{
+	return EventType == EDlgEventType::Custom && CustomEvent != nullptr && !CustomEvent->RequiresParticipant();
 }
 
 FString FDlgEvent::EventTypeToString(EDlgEventType Type)

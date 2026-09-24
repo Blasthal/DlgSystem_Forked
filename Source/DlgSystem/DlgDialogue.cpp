@@ -776,6 +776,12 @@ void UDlgDialogue::UpdateAndRefreshData(bool bUpdateTextsNamespacesAndKeys)
 		// Events
 		for (const FDlgEvent& Event : Node->GetNodeEnterEvents())
 		{
+			// Does not belong to any participant, even if the node has an owner to fall back to
+			if (Event.IsParticipantIndependentCustomEvent())
+			{
+				continue;
+			}
+
 			const FString ContextMessage = FString::Printf(TEXT("Adding events data for %s"), *NodeContext);
 			GetParticipantDataEntry(Event.ParticipantName, NodeParticipantName, true, ContextMessage)
 				.AddEventData(Event);

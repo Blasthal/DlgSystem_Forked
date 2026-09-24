@@ -32,6 +32,15 @@ public:
 		return TargetPreFix + GetName();
 #endif
 	}
+
+	// Does this event use the participant it is called on?
+	// Return false only if the event never uses the participant, then no participant metadata is collected
+	// for it and no "participant is invalid" warning is logged when it is called without one.
+	// C++ only on purpose; defaults to true so unaware/Blueprint events keep the existing behavior.
+	virtual bool RequiresParticipant() const
+	{
+		return true;
+	}
 };
 
 // This is the same as UDlgEventCustom but it does NOT show the categories
